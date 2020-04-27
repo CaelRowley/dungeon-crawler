@@ -3,8 +3,8 @@ extends KinematicBody2D
 var velocity = Vector2.ZERO
 
 const MAX_SPEED = 100
-const ACCELERATION = 500
-const FRICTION = 500
+const ACCELERATION = 400
+const FRICTION = 400
 
 # onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
