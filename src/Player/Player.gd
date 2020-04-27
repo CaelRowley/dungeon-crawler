@@ -20,7 +20,7 @@ func _ready():
 	animationTree.active = true
 	
 # _function <== means callback function
-func _physics_process(delta):
+func _process(delta):
 	match state:
 		RUN:
 			runState(delta)
