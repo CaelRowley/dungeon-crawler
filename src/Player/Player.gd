@@ -7,10 +7,13 @@ enum {
 }
 var state = RUN
 var velocity = Vector2.ZERO
+var rollVector = Vector2.LEFT
 
 const MAX_SPEED = 100
 const ACCELERATION = 400
 const FRICTION = 400
+
+const ROLL_SPEED = 110
 
 # onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
@@ -25,10 +28,10 @@ func _process(delta):
 		RUN:
 			runState(delta)
 		ATTACK:
-			attackState(delta)
+			attackState()
 		DODGE:
-			pass
-
+			dodgeState(delta)
+	
 func runState(delta):
 	var inputVector = Vector2.ZERO
 	inputVector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -36,9 +39,11 @@ func runState(delta):
 	inputVector = inputVector.normalized()
 	
 	if inputVector != Vector2.ZERO:
+		rollVector = inputVector
 		animationTree.set("parameters/Idle/blend_position", inputVector)
 		animationTree.set("parameters/Run/blend_position", inputVector)
 		animationTree.set("parameters/Attack/blend_position", inputVector)
+		animationTree.set("parameters/Roll/blend_position", inputVector)
 		animationState.travel("Run")
 		velocity = velocity.move_toward(inputVector * MAX_SPEED, ACCELERATION * delta)
 	else:
@@ -53,9 +58,17 @@ func runState(delta):
 	if Input.is_action_just_pressed("dodge"):
 		state = DODGE
 	
-func attackState(delta):
+func attackState():
 	velocity = Vector2.ZERO
 	animationState.travel("Attack")
 
 func attackStateFinished():
+	state = RUN
+
+func dodgeState(delta):
+	velocity = move_and_slide(rollVector * ROLL_SPEED)
+	animationState.travel("Roll")
+
+func dodgeStateFinished():
+	velocity = velocity * 0.9
 	state = RUN
