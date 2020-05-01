@@ -12,15 +12,15 @@ var rollVector = Vector2.LEFT
 const MAX_SPEED = 100
 const ACCELERATION = 400
 const FRICTION = 400
-
 const ROLL_SPEED = 110
 
-# onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
+onready var swordHitbox = $HitboxPivot/SwordHitbox
 
 func _ready():
 	animationTree.active = true
+	swordHitbox.knockbackVector = rollVector
 	
 # _function <== means callback function
 func _process(delta):
@@ -40,6 +40,7 @@ func runState(delta):
 	
 	if inputVector != Vector2.ZERO:
 		rollVector = inputVector
+		swordHitbox.knockbackVector = inputVector
 		animationTree.set("parameters/Idle/blend_position", inputVector)
 		animationTree.set("parameters/Run/blend_position", inputVector)
 		animationTree.set("parameters/Attack/blend_position", inputVector)
