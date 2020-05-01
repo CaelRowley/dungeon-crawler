@@ -22,7 +22,6 @@ func _ready():
 	animationTree.active = true
 	swordHitbox.knockbackVector = rollVector
 	
-# _function <== means callback function
 func _process(delta):
 	match state:
 		RUN:
@@ -30,7 +29,7 @@ func _process(delta):
 		ATTACK:
 			attackState()
 		DODGE:
-			dodgeState(delta)
+			dodgeState()
 	
 func runState(delta):
 	var inputVector = Vector2.ZERO
@@ -66,7 +65,7 @@ func attackState():
 func attackStateFinished():
 	state = RUN
 
-func dodgeState(delta):
+func dodgeState():
 	velocity = move_and_slide(rollVector * ROLL_SPEED)
 	animationState.travel("Roll")
 
