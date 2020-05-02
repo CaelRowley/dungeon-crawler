@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+const BatEffect = preload("res://Effects/BatEffect.tscn")
+
 const FRICTION = 200
 
 onready var stats = $Stats
@@ -15,4 +17,7 @@ func _on_Hurtbox_area_entered(collider):
 	knockback = collider.knockbackVector * 120
 
 func _on_Stats_noHealth():
+	var batEffect = BatEffect.instance()
+	get_parent().add_child(batEffect)
+	batEffect.global_position = global_position
 	queue_free()

@@ -7,7 +7,7 @@ enum {
 }
 var state = RUN
 var velocity = Vector2.ZERO
-var rollVector = Vector2.LEFT
+var rollVector = Vector2.DOWN
 
 const MAX_SPEED = 100
 const ACCELERATION = 400
