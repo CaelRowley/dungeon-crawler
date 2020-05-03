@@ -8,6 +8,7 @@ enum {
 var state = RUN
 var velocity = Vector2.ZERO
 var rollVector = Vector2.DOWN
+var stats = PlayerStats
 
 const MAX_SPEED = 100
 const ACCELERATION = 400
@@ -17,8 +18,10 @@ const ROLL_SPEED = 110
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
 onready var swordHitbox = $HitboxPivot/SwordHitbox
+onready var hurtbox = $Hurtbox
 
 func _ready():
+	stats.connect("noHealth", self, "queue_free")
 	animationTree.active = true
 	swordHitbox.knockbackVector = rollVector
 	
@@ -72,3 +75,10 @@ func dodgeState():
 func dodgeStateFinished():
 	velocity = velocity * 0.9
 	state = RUN
+
+
+func _on_Hurtbox_area_entered(collider):
+	hurtbox.startInvincibility(0.5)
+	hurtbox.createHitEffect()
+	stats.setHealth(stats.getHealth() - collider.getDamage())
+

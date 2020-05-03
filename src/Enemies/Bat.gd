@@ -9,6 +9,7 @@ export var FRICTION = 200
 onready var sprite = $AnimatedSprite
 onready var stats = $Stats
 onready var playerDetectionZone = $PlayerDetectionZone
+onready var hurtbox = $Hurtbox 
 
 enum {
 	IDLE,
@@ -47,8 +48,9 @@ func seekPlayer():
 		state = IDLE
 
 func _on_Hurtbox_area_entered(collider):
+	hurtbox.createHitEffect()
 	stats.setHealth(stats.getHealth() - collider.getDamage())
-	knockback = collider.knockbackVector * 120
+	knockback = collider.knockbackVector * 130
 
 func _on_Stats_noHealth():
 	var batEffect = BatEffect.instance()
