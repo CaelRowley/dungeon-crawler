@@ -44,7 +44,7 @@ radius = 4.0
 height = 4.0
 
 [sub_resource type="CircleShape2D" id=9]
-radius = 58.0086
+radius = 74.0
 
 [sub_resource type="CapsuleShape2D" id=10]
 radius = 4.0
@@ -59,7 +59,7 @@ script = ExtResource( 4 )
 position = Vector2( 0, -12 )
 frames = SubResource( 6 )
 animation = "Fly"
-frame = 4
+frame = 2
 playing = true
 
 [node name="Shadow" type="Sprite" parent="."]

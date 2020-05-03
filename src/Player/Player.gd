@@ -76,9 +76,8 @@ func dodgeStateFinished():
 	velocity = velocity * 0.9
 	state = RUN
 
-
 func _on_Hurtbox_area_entered(collider):
-	hurtbox.startInvincibility(0.5)
+	hurtbox.startInvincibility(1)
 	hurtbox.createHitEffect()
 	stats.setHealth(stats.getHealth() - collider.getDamage())
 
