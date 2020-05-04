@@ -11,7 +11,6 @@ func setMaxHealth(newMaxHealth):
 	maxHealth = newMaxHealth
 	setHealth(min(getHealth(), newMaxHealth))
 	emit_signal("maxHealthChanged", newMaxHealth)
-	print("PlayerStats: setMaxHealth " + str(getHealth()))
 
 func getMaxHealth():
 	return health
@@ -27,4 +26,3 @@ func getHealth():
 
 func _ready():
 	setHealth(maxHealth)
-
