@@ -5,6 +5,5 @@ func _ready():
 	frame = 0
 	play("Animate")
 
-
 func onAnimationFinished():
 	queue_free()

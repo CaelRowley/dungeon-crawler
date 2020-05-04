@@ -10,6 +10,7 @@ onready var sprite = $AnimatedSprite
 onready var stats = $Stats
 onready var playerDetectionZone = $PlayerDetectionZone
 onready var hurtbox = $Hurtbox 
+onready var wanderController = $WanderController 
 
 enum {
 	IDLE,
@@ -20,32 +21,48 @@ var state = IDLE
 var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
 
+func _ready():
+	state = getRandomState([IDLE, WANDER])
+	
 func _physics_process(delta):
 	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta)
 	knockback = move_and_slide(knockback)
 	
 	match state:
 		IDLE:
-			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)	
-			seekPlayer()			
+			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+			updateState()
 		WANDER:
-			pass
+			moveTowardPosition(wanderController.getTargetPosition(), delta)
+			if global_position.distance_to(wanderController.targetPosition) <= 1:
+				state = getRandomState([IDLE, WANDER])
+				wanderController.setWanderTime(rand_range(0.5, 2))
+			updateState()
 		CHASE:
 			if playerDetectionZone.canSeePlayer():
 				var player = playerDetectionZone.player
-				# var direction = (player.global_position - global_position).normalized()
-				var direction = global_position.direction_to(player.global_position)
-				velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
-			seekPlayer()
-				
-	sprite.flip_h = velocity.x < 0
+				moveTowardPosition(player.global_position, delta)
+			else:
+				state = IDLE
+			updateState()
+			
 	velocity = move_and_slide(velocity)
+		
+func moveTowardPosition(targetPosition, delta):
+	var direction = global_position.direction_to(targetPosition)
+	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+	sprite.flip_h = velocity.x < 0
 
-func seekPlayer():
+func updateState():
 	if playerDetectionZone.canSeePlayer():
 		state = CHASE
-	else:
-		state = IDLE
+	elif wanderController.getTimeLeft() == 0:
+		state = getRandomState([IDLE, WANDER])
+		wanderController.setWanderTime(rand_range(0.5, 2))
+
+func getRandomState(statesList):
+	statesList.shuffle()
+	return statesList.pop_front()
 
 func _on_Hurtbox_area_entered(collider):
 	hurtbox.createHitEffect()
