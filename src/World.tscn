@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://Enemies/Bat.tscn" type="PackedScene" id=7]
 [ext_resource path="res://UI/HealthUI.tscn" type="PackedScene" id=8]
 [ext_resource path="res://World/Tree.tscn" type="PackedScene" id=9]
-[ext_resource path="res://UI/Camera2D.tscn" type="PackedScene" id=11]
 
 [sub_resource type="TileSet" id=1]
 0/name = "DirtTileset.png 0"
@@ -512,12 +511,8 @@ tile_data = PoolIntArray( -262146, 0, 0, -262145, 0, 1, -327680, 0, 1, -327679, 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 289, 178 )
 current = true
-zoom = Vector2( 2, 2 )
 smoothing_enabled = true
 smoothing_speed = 4.0
-
-[node name="NoJitterCamera2D" parent="." instance=ExtResource( 11 )]
-offset = Vector2( 177, 250 )
 
 [node name="YSort" type="YSort" parent="."]
 position = Vector2( 177, 253 )

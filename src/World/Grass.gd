@@ -9,5 +9,5 @@ func createGrassEffect():
 	queue_free()
 
 
-func _on_Hurtbox_area_entered(area):
+func _on_Hurtbox_area_entered(_area):
 	createGrassEffect()

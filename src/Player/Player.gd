@@ -1,10 +1,13 @@
 extends KinematicBody2D
 
+const PlayerHurtSound = preload("res://Player/PlayerHurtSound.tscn")
+
 enum {
 	RUN,
 	DODGE,
 	ATTACK
 }
+
 var state = RUN
 var velocity = Vector2.ZERO
 var rollVector = Vector2.DOWN
@@ -80,4 +83,7 @@ func _on_Hurtbox_area_entered(collider):
 	hurtbox.startInvincibility(1)
 	hurtbox.createHitEffect()
 	stats.setHealth(stats.getHealth() - collider.getDamage())
+	var playerHurtSound = PlayerHurtSound.instance()
+	get_tree().current_scene.add_child(playerHurtSound)
+	
 
