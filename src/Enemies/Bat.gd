@@ -11,6 +11,7 @@ onready var stats = $Stats
 onready var playerDetectionZone = $PlayerDetectionZone
 onready var hurtbox = $Hurtbox 
 onready var wanderController = $WanderController 
+onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 
 enum {
 	IDLE,
@@ -66,8 +67,10 @@ func getRandomState(statesList):
 
 func _on_Hurtbox_area_entered(collider):
 	hurtbox.createHitEffect()
+	blinkAnimationPlayer.play("Start")
 	stats.setHealth(stats.getHealth() - collider.getDamage())
 	knockback = collider.knockbackVector * 130
+	hurtbox.startInvincibility(0.1)
 
 func _on_Stats_noHealth():
 	var batEffect = BatEffect.instance()

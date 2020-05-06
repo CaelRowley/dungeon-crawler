@@ -2,7 +2,7 @@ extends Area2D
 
 const HitEffect = preload("res://Effects/HitEffect.tscn") 
 
-var invincible = false setget setInvinsible, isInvincible
+var invincible = false setget setInvinsible
 
 onready var timer = $Timer
 
@@ -15,9 +15,6 @@ func setInvinsible(isInvincible):
 		emit_signal("invincibilityStarted")
 	else:
 		emit_signal("invincibilityEnded")
-	
-func isInvincible():
-	pass
 
 func startInvincibility(duration):
 	setInvinsible(true)

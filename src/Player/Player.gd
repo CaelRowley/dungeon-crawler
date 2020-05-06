@@ -22,10 +22,12 @@ onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
 onready var swordHitbox = $HitboxPivot/SwordHitbox
 onready var hurtbox = $Hurtbox
+onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 
 func _ready():
 	stats.connect("noHealth", self, "queue_free")
 	animationTree.active = true
+	# sets default direction for sword attack to match roll direction
 	swordHitbox.knockbackVector = rollVector
 	
 func _process(delta):
@@ -82,6 +84,7 @@ func dodgeStateFinished():
 func _on_Hurtbox_area_entered(collider):
 	hurtbox.startInvincibility(1)
 	hurtbox.createHitEffect()
+	blinkAnimationPlayer.play("Start")
 	stats.setHealth(stats.getHealth() - collider.getDamage())
 	var playerHurtSound = PlayerHurtSound.instance()
 	get_tree().current_scene.add_child(playerHurtSound)
