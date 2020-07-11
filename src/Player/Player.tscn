@@ -8,7 +8,9 @@
 [ext_resource path="res://Shadows/MediumShadow.png" type="Texture" id=6]
 [ext_resource path="res://Music and Sounds/Swipe.wav" type="AudioStream" id=7]
 [ext_resource path="res://Music and Sounds/Evade.wav" type="AudioStream" id=8]
-[ext_resource path="res://Player/Black_viper.png" type="Texture" id=12]
+
+[sub_resource type="StreamTexture" id=50]
+load_path = "res://.import/Black_viper.png-40697af8c60948419c9b4de08ab140ed.stex"
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2490.69, 779.26 )
@@ -574,6 +576,18 @@ height = 6.0
 
 [sub_resource type="Animation" id=49]
 length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture:resource_path")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "res://Player/Black_viper.png" ]
+}
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
@@ -585,10 +599,10 @@ scale = Vector2( 1.31014, 3.52 )
 texture = ExtResource( 6 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 1.09282, -5.72156 )
-scale = Vector2( 0.15, 0.15 )
+position = Vector2( 3.17393, -6.61347 )
+scale = Vector2( 0.186193, 0.156326 )
 z_index = 1
-texture = ExtResource( 12 )
+texture = SubResource( 50 )
 
 [node name="CardArea" type="Area2D" parent="."]
 position = Vector2( 1.80473, -73.4771 )

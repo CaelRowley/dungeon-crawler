@@ -78,7 +78,7 @@ func _process(delta):
 #		get_tree().change_scene("res://path/to/scene.tscn")
 
 func on_timeout_complete():
-	canPlayCard = true
+	canPlayCard = true 
 	state = "Idle"
 	
 func on_timeout_slowdown():
