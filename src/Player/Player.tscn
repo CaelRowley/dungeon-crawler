@@ -1,5 +1,6 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=59 format=2]
 
+[ext_resource path="res://Player/Deck.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://Collision/Hitbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Player/SwordHitbox.gd" type="Script" id=4]
@@ -7,8 +8,6 @@
 [ext_resource path="res://Shadows/MediumShadow.png" type="Texture" id=6]
 [ext_resource path="res://Music and Sounds/Swipe.wav" type="AudioStream" id=7]
 [ext_resource path="res://Music and Sounds/Evade.wav" type="AudioStream" id=8]
-[ext_resource path="res://Player/Cards/LeftCard.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Player/Cards/RightCard.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Player/Black_viper.png" type="Texture" id=12]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -661,13 +660,8 @@ stream = ExtResource( 7 )
 [node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Start = SubResource( 50 )
 
-[node name="RightCard" parent="." instance=ExtResource( 11 )]
-position = Vector2( 55.0639, 32.995 )
-scale = Vector2( 0.5, 0.5 )
-
-[node name="LeftCard" parent="." instance=ExtResource( 10 )]
-position = Vector2( -55.0387, 32.4588 )
-scale = Vector2( 0.5, 0.5 )
+[node name="Deck" type="Node" parent="."]
+script = ExtResource( 1 )
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 
 [editable path="HitboxPivot/SwordHitbox"]
