@@ -2,8 +2,9 @@ extends Node
 
 const leftCard = preload("res://Player/Cards/LeftCard.tscn")
 const rightCard = preload("res://Player/Cards/RightCard.tscn")
+const boostCard = preload("res://Player/Cards/BoostCard.tscn")
 
-var deck = ['leftCard', 'leftCard', 'leftCard', 'leftCard', 'leftCard', 'rightCard', 'rightCard', 'rightCard', 'rightCard', 'rightCard']
+var deck = ['leftCard', 'boostCard', 'leftCard', 'leftCard', 'boostCard', 'rightCard', 'rightCard', 'boostCard', 'rightCard', 'rightCard']
 
 var handSize = 3
 var hand = []
@@ -50,6 +51,8 @@ func displayHand():
 			card = leftCard.instance()
 		if(hand[i] == 'rightCard'):
 			card = rightCard.instance()
+		if(hand[i] == 'boostCard'):
+			card = boostCard.instance()
 			
 		get_parent().add_child(card)
 		card.position = Vector2(-50 * (i -1), 50)

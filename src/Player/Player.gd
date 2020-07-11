@@ -83,6 +83,8 @@ func _process(delta):
 			leftState(delta)
 		"RightCard":
 			rightState(delta)
+		"BoostCard":
+			boostState(delta)
 		"Win":
 			pass
 	velocity = move_and_slide(velocity)
@@ -119,7 +121,18 @@ func rightState(delta):
 	targetVector.y = -1
 	var targetPosition = global_position + targetVector.normalized()
 	drift(targetPosition, delta, MAX_SPEED)
+
+func boostState(delta):
+	if(canPlayCard):
+		canPlayCard = false
+		timer.start()
+	var targetVector = Vector2.ZERO
+	targetVector.x = 0
+	targetVector.y = -1
+	var targetPosition = global_position + targetVector.normalized()
+	MAX_SPEED += 1
 	
+
 func drive(targetPosition, delta):
 	var direction = global_position.direction_to(targetPosition)
 	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)

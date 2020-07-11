@@ -1,6 +1,6 @@
 extends Area2D
 
-export(String) var card = "LeftCard" setget , getCard
+export(String) var card = "BoostCard" setget , getCard
 
 func getCard():
 	return card
