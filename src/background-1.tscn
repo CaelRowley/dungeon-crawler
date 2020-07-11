@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://UI/background-1.png" type="Texture" id=1]
 [ext_resource path="res://background-2.jpeg" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16.9058, 466.197 )
 
 [node name="background-1" type="Sprite"]
 position = Vector2( 160, 90 )
@@ -13,3 +16,13 @@ texture = ExtResource( 1 )
 position = Vector2( -6.44427, 115.556 )
 scale = Vector2( 0.739994, 1.12129 )
 texture = ExtResource( 2 )
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
+position = Vector2( -339.26, 116.765 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="KinematicBody2D"]
+position = Vector2( 319.89, 120.819 )
+shape = SubResource( 1 )

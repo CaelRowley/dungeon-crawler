@@ -4,12 +4,12 @@ const background = preload("res://background-1.tscn")
 const car = preload("res://Enemies/Car.tscn")
 
 var backgrounds: Array = []
-var numOfBackgrounds: int = 200
+var numOfBackgrounds: int = 500
 var nextBackground: int = -1
 var backgroundCount: int = 0
 
 var cars: Array = []
-var maxCars: int = 200
+var maxCars: int = 500
 var numberOfCars: int = 0
 
 var time_passed = 0
@@ -17,7 +17,7 @@ var time_passed = 0
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	time_passed += delta
-	if(int(time_passed) % 15 == 0):
+	if(int(time_passed) % 20 == 0):
 		if(backgroundCount < numOfBackgrounds):
 			var backgrounda = background.instance()
 			backgrounds.push_front(backgrounda)
@@ -38,5 +38,4 @@ func _process(delta):
 		else:
 			cars.pop_back().queue_free()
 			numberOfCars -= 1
-
 	pass
