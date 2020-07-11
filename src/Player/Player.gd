@@ -29,8 +29,11 @@ var cardsPlayed = 0
 
 var slowTimer = null
 
+var highestSpeed = 0
+var startPos = 0
+
 func _ready():
-	stats.connect("noHealth", self, "queue_free")
+	stats.connect("noHealth", self, "end_game")
 	animationTree.active = true
 	# sets default direction for sword attack to match roll direction
 	swordHitbox.knockbackVector = rollVector
@@ -39,6 +42,7 @@ func _ready():
 	timer.set_wait_time(0.5)
 	timer.connect("timeout", self, "on_timeout_complete")
 	add_child(timer)
+	$Panel.visible = false
 	
 	slowTimer = Timer.new()
 	slowTimer.set_one_shot(false)
@@ -47,12 +51,27 @@ func _ready():
 	add_child(slowTimer)
 	slowTimer.start()
 	
+	startPos = position.y
+	print(startPos)
+
+func end_game():
+	if ($Sprite):
+		state = "Win"
+		$Sprite.queue_free()
+		$Panel/MaxSpeed.text = 'Max Speed: ' + str(highestSpeed)
+		$Panel/Distance.text = 'Distance: ' + str(-position.y - -startPos)
+		$Panel.visible = true
+		canPlayCard = false
+	
 func _unhandled_input(event):
 	if event.is_action_released("left_click"):
 		for area in cardArea.get_overlapping_areas():
 			MAX_SPEED+=20
+			if(MAX_SPEED > highestSpeed):
+				highestSpeed = MAX_SPEED
 			handSize -= 1
 			cardsPlayed +=1
+			$Panel/CardsPlayed.text = 'Cards Played: ' + str(cardsPlayed)
 			state = area.getCard()
 			area.queue_free()
 
@@ -71,11 +90,6 @@ func _process(delta):
 		deck.discardHand()
 		deck.nextHand()
 		handSize = deck.getHandSize()
-	if (position.y < -10000 && state != "Win"):
-		state = "Win"
-		print('you win')
-		print('score: ', cardsPlayed)
-#		get_tree().change_scene("res://path/to/scene.tscn")
 
 func on_timeout_complete():
 	canPlayCard = true
@@ -176,3 +190,6 @@ func _on_Hurtbox_area_entered(collider):
 	var playerHurtSound = PlayerHurtSound.instance()
 	get_tree().current_scene.add_child(playerHurtSound)
 	
+func _on_MenuButton_pressed():
+	stats.setHealth(3)
+	get_tree().change_scene("res://World.tscn")
