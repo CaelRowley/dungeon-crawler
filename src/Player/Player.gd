@@ -92,7 +92,7 @@ func _process(delta):
 		handSize = deck.getHandSize()
 
 func on_timeout_complete():
-	canPlayCard = true
+	canPlayCard = true 
 	state = "Idle"
 	
 func on_timeout_slowdown():
