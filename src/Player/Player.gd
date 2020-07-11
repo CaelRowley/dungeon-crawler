@@ -71,7 +71,7 @@ func _process(delta):
 		deck.discardHand()
 		deck.nextHand()
 		handSize = deck.getHandSize()
-	if (position.y < -10000 && state != "Win"):
+	if (position.y < -5000 && state != "Win"):
 		state = "Win"
 		print('you win')
 		print('score: ', cardsPlayed)
