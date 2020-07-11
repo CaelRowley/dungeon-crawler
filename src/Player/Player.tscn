@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://Player/Deck.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -565,7 +565,11 @@ graph_offset = Vector2( -209, -25 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=46]
 
-[sub_resource type="RectangleShape2D" id=50]
+[sub_resource type="RectangleShape2D" id=47]
+
+[sub_resource type="CapsuleShape2D" id=50]
+radius = 7.5222
+height = 0.883048
 
 [sub_resource type="CapsuleShape2D" id=48]
 radius = 5.0
@@ -579,8 +583,8 @@ collision_layer = 2
 script = ExtResource( 2 )
 
 [node name="Shadow" type="Sprite" parent="."]
-position = Vector2( 0.0642815, -6.48538 )
-scale = Vector2( 1.31014, 3.52 )
+position = Vector2( -0.801919, -3.57181 )
+scale = Vector2( 1.16249, 2.93729 )
 texture = ExtResource( 6 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -647,8 +651,13 @@ damage = 100
 [node name="CollisionShape2D" parent="HitboxPivot/SwordHitbox" index="0"]
 position = Vector2( -42.1757, -1.91267 )
 scale = Vector2( -11.6426, 24.9916 )
-shape = SubResource( 50 )
+shape = SubResource( 47 )
 disabled = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitboxPivot/SwordHitbox"]
+position = Vector2( -16.379, 0.315032 )
+rotation = 1.5708
+shape = SubResource( 50 )
 
 [node name="Hurtbox" parent="." instance=ExtResource( 5 )]
 scale = Vector2( 2, 1.16 )
@@ -668,6 +677,7 @@ anims/Start = SubResource( 49 )
 script = ExtResource( 1 )
 
 [node name="Panel" type="Panel" parent="."]
+visible = false
 margin_left = -81.0556
 margin_top = -92.839
 margin_right = 82.9444
