@@ -630,17 +630,15 @@ scale = Vector2( 1.16249, 2.93729 )
 texture = ExtResource( 6 )
 
 [node name="PoliceSprite" type="Sprite" parent="."]
-visible = false
 
 [node name="PoliceSprite" type="AnimatedSprite" parent="PoliceSprite"]
 position = Vector2( 0.531587, -6.14249 )
 scale = Vector2( 0.15, 0.15 )
 frames = SubResource( 58 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="AmbulanceSprite" type="Sprite" parent="."]
-visible = false
 
 [node name="AmbulanceSprite" type="AnimatedSprite" parent="AmbulanceSprite"]
 position = Vector2( 0.531587, -6.14249 )
@@ -651,8 +649,8 @@ animation = "New Anim"
 playing = true
 
 [node name="BusSprite" type="Sprite" parent="."]
-position = Vector2( 0.531587, -6.14249 )
-scale = Vector2( 0.15, 0.15 )
+position = Vector2( -0.204192, -5.09136 )
+scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 11 )
 
 [node name="CardArea" type="Area2D" parent="."]
@@ -790,6 +788,18 @@ margin_right = 330.0
 margin_bottom = 128.459
 rect_scale = Vector2( 0.5, 0.5 )
 text = "Distance:"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="Panel"]
+margin_left = -0.0729675
+margin_top = 69.3834
+margin_right = 330.927
+margin_bottom = 149.383
+rect_scale = Vector2( 0.5, 0.5 )
+text = "Score:"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false

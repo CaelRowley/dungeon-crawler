@@ -2,6 +2,8 @@ extends Node2D
 
 const background = preload("res://background-1.tscn")
 const car = preload("res://Enemies/Car.tscn")
+const scooter = preload("res://Enemies/Scooter.tscn")
+const deadScooter = preload("res://Enemies/DeadScooter.tscn")
 
 var backgrounds: Array = []
 var numOfBackgrounds: int = 500
@@ -30,7 +32,16 @@ func _process(delta):
 			backgroundCount -= 1
 		
 		if(numberOfCars < maxCars):
-			var carVal = car.instance()
+			var carVal
+			randomize()
+			var x = randi()%3
+			if(x == 1):
+				carVal = car.instance()
+			elif(x == 2):
+				carVal = scooter.instance()
+			else:
+				carVal = deadScooter.instance()
+
 			cars.push_front(carVal)
 			get_parent().add_child(carVal)
 			carVal.global_position = Vector2(35* (randi()%8)+1, 90* nextBackground)

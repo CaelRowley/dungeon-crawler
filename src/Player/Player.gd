@@ -26,6 +26,7 @@ var canPlayCard = true
 var speed = 1
 var handSize = 0 
 var cardsPlayed = 0
+var score = 0
 
 var slowTimer = null
 
@@ -38,6 +39,7 @@ var currentRole
 func _ready():
 	randomize()
 	var x = randi()%3
+	x=2
 	if(x == 1):
 		$BusSprite.visible = false
 		$AmbulanceSprite.visible = true
@@ -84,6 +86,7 @@ func end_game():
 	$PoliceSprite.visible = false
 	$Panel/MaxSpeed.text = 'Max Speed: ' + str(highestSpeed)
 	$Panel/Distance.text = 'Distance: ' + str(-position.y - -startPos)
+	$Panel/Score.text = 'Score: ' + str(score)
 	$Panel.visible = true
 	canPlayCard = false
 
@@ -246,12 +249,19 @@ func dodgeStateFinished():
 	state = "run"
 
 func _on_Hurtbox_area_entered(collider):
-	hurtbox.startInvincibility(1)
-	hurtbox.createHitEffect()
-	blinkAnimationPlayer.play("Start")
-	stats.setHealth(stats.getHealth() - collider.getDamage())
-	var playerHurtSound = PlayerHurtSound.instance()
-	get_tree().current_scene.add_child(playerHurtSound)
+	if (collider.getName() == 'Scooter' && currentRole == 'Police'):
+		score += 10
+	elif (collider.getName() == 'DeadScooter' && currentRole == 'Ambulance'):
+		score += 10
+	elif (collider.getName() == 'BusStop' && currentRole == 'Bus'):
+		score += 10
+	else:
+		hurtbox.startInvincibility(1)
+		hurtbox.createHitEffect()
+		blinkAnimationPlayer.play("Start")
+		stats.setHealth(stats.getHealth() - collider.getDamage())
+		var playerHurtSound = PlayerHurtSound.instance()
+		get_tree().current_scene.add_child(playerHurtSound)
 	
 func _on_MenuButton_pressed():
 	stats.setHealth(3)
