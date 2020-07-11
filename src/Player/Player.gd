@@ -31,8 +31,10 @@ var slowTimer = null
 
 var highestSpeed = 0
 var startPos = 0
+onready var hurtBox = $HitboxPivot/SwordHitbox/CollisionShape2D
 
 func _ready():
+	hurtBox.disabled = true
 	stats.connect("noHealth", self, "end_game")
 	animationTree.active = true
 	# sets default direction for sword attack to match roll direction
@@ -55,6 +57,7 @@ func _ready():
 	print(startPos)
 
 func end_game():
+	hurtBox.disabled = false
 	if ($Sprite):
 		state = "Win"
 		$Sprite.queue_free()
@@ -62,6 +65,7 @@ func end_game():
 		$Panel/Distance.text = 'Distance: ' + str(-position.y - -startPos)
 		$Panel.visible = true
 		canPlayCard = false
+
 	
 func _unhandled_input(event):
 	if event.is_action_released("left_click"):
@@ -72,7 +76,13 @@ func _unhandled_input(event):
 			handSize -= 1
 			cardsPlayed +=1
 			$Panel/CardsPlayed.text = 'Cards Played: ' + str(cardsPlayed)
-			state = area.getCard()
+			
+			if(area.getCard() == "KillCard"):
+				timer.start()
+				hurtBox.disabled = false
+			else:
+				state = area.getCard()
+			
 			area.queue_free()
 
 func _process(delta):
@@ -86,7 +96,7 @@ func _process(delta):
 		"BoostCard":
 			boostState(delta)
 		"Win":
-			pass
+			velocity = velocity.move_toward(Vector2.ZERO, ACCELERATION * delta)
 	velocity = move_and_slide(velocity)
 	if(handSize < 1):
 		deck.discardHand()
@@ -94,7 +104,8 @@ func _process(delta):
 		handSize = deck.getHandSize()
 
 func on_timeout_complete():
-	canPlayCard = true 
+	hurtBox.disabled = true
+	canPlayCard = true
 	state = "Idle"
 	
 func on_timeout_slowdown():

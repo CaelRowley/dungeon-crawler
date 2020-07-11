@@ -3,8 +3,9 @@ extends Node
 const leftCard = preload("res://Player/Cards/LeftCard.tscn")
 const rightCard = preload("res://Player/Cards/RightCard.tscn")
 const boostCard = preload("res://Player/Cards/BoostCard.tscn")
+const killCard = preload("res://Player/Cards/KillCard.tscn")
 
-var deck = ['leftCard', 'boostCard', 'leftCard', 'leftCard', 'boostCard', 'rightCard', 'rightCard', 'boostCard', 'rightCard', 'rightCard']
+var deck = ['leftCard', 'leftCard', 'leftCard', 'rightCard', 'rightCard', 'rightCard', 'boostCard', 'boostCard', 'killCard', 'killCard']
 
 var handSize = 3
 var hand = []
@@ -51,6 +52,8 @@ func displayHand():
 			card = leftCard.instance()
 		if(hand[i] == 'rightCard'):
 			card = rightCard.instance()
+		if(hand[i] == 'killCard'):
+			card = killCard.instance()
 		if(hand[i] == 'boostCard'):
 			card = boostCard.instance()
 			
