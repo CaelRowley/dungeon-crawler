@@ -2,6 +2,9 @@ extends Node2D
 
 const background = preload("res://background-1.tscn")
 const car = preload("res://Enemies/Car.tscn")
+const car2 = preload("res://Enemies/Car2.tscn")
+const car3 = preload("res://Enemies/Car3.tscn")
+const car4 = preload("res://Enemies/Car4.tscn")
 const scooter = preload("res://Enemies/Scooter.tscn")
 const deadScooter = preload("res://Enemies/DeadScooter.tscn")
 
@@ -36,7 +39,15 @@ func _process(delta):
 			randomize()
 			var x = randi()%3
 			if(x == 1):
-				carVal = car.instance()
+				var y = randi()%4
+				if(y == 1):
+					carVal = car.instance()
+				elif(y == 2):
+					carVal = car2.instance()
+				elif(y == 3):
+					carVal = car3.instance()
+				else:
+					carVal = car4.instance()	
 			elif(x == 2):
 				carVal = scooter.instance()
 			else:

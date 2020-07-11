@@ -76,7 +76,7 @@ func _ready():
 	slowTimer.start()
 	
 	startPos = position.y
-	print(startPos)
+
 
 func end_game():
 	state = "Win"
@@ -139,6 +139,7 @@ func _process(delta):
 			boostState(delta)
 		"Win":
 			velocity = velocity.move_toward(Vector2.ZERO, ACCELERATION * delta)
+			canPlayCard = false
 	velocity = move_and_slide(velocity)
 	if(handSize < 1):
 		deck.discardHand()
@@ -146,9 +147,10 @@ func _process(delta):
 		handSize = deck.getHandSize()
 
 func on_timeout_complete():
-	hurtBox.disabled = true
-	canPlayCard = true
-	state = "Idle"
+	if (state != "Win"):
+		hurtBox.disabled = true
+		canPlayCard = true
+		state = "Idle"
 	
 func on_timeout_slowdown():
 	pass

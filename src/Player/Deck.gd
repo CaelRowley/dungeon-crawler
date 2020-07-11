@@ -8,9 +8,9 @@ const policeCard = preload("res://Player/Cards/policeCard.tscn")
 const ambulanceCard = preload("res://Player/Cards/ambulanceCard.tscn")
 const busCard = preload("res://Player/Cards/busCard.tscn")
 
-var deck = ['leftCard', 'leftCard', 'leftCard', 'rightCard', 'rightCard', 'rightCard', 'boostCard', 'boostCard', 'killCard', 'killCard', 'policeCard', 'ambulanceCard', 'busCard']
+var deck = ['leftCard', 'leftCard', 'leftCard', 'leftCard', 'rightCard', 'rightCard', 'rightCard', 'rightCard', 'killCard', 'killCard', 'policeCard', 'ambulanceCard', 'busCard']
 
-var handSize = 3
+var handSize = 5
 var hand = []
 var discardPile = []
 
@@ -67,7 +67,7 @@ func displayHand():
 			card = busCard.instance()
 			
 		get_parent().add_child(card)
-		card.position = Vector2(-50 * (i -1), 50)
+		card.position = Vector2(-30 * (i -1), 50)
 		
 func getHandSize():
 	return hand.size()
