@@ -89,4 +89,3 @@ func _on_Hurtbox_area_entered(collider):
 	var playerHurtSound = PlayerHurtSound.instance()
 	get_tree().current_scene.add_child(playerHurtSound)
 	
-
