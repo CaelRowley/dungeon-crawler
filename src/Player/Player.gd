@@ -8,7 +8,7 @@ var rollVector = Vector2.DOWN
 var stats = PlayerStats
 
 const MAX_SPEED = 100
-const ACCELERATION = 400
+const ACCELERATION = 10000
 const FRICTION = 400
 const ROLL_SPEED = 110
 
@@ -19,10 +19,12 @@ onready var hurtbox = $Hurtbox
 onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 
 onready var cardArea = $CardArea
+onready var deck = $Deck
 
 var timer = null
 var canPlayCard = true
-var speed = -1
+var speed = 1
+var handSize = 0 
 
 func _ready():
 	stats.connect("noHealth", self, "queue_free")
@@ -38,6 +40,7 @@ func _ready():
 func _unhandled_input(event):
 	if event.is_action_released("left_click"):
 		for area in cardArea.get_overlapping_areas():
+			handSize -= 1
 			state = area.getCard()
 			area.queue_free()
 
@@ -46,16 +49,14 @@ func _process(delta):
 		"Idle":
 			idleState(delta)
 		"LeftCard":
-			speed -=1
 			leftState(delta)
 		"RightCard":
-			speed -=1
 			rightState(delta)
-	var targetVector = Vector2.ZERO
-	targetVector.y = speed
-	var targetPosition = global_position + targetVector
-	moveTowardPosition(targetPosition, delta)
 	velocity = move_and_slide(velocity)
+	if(handSize < 1):
+		deck.discardHand()
+		deck.nextHand()
+		handSize = deck.getHandSize()
 
 func on_timeout_complete():
 	canPlayCard = true
@@ -66,26 +67,34 @@ func leftState(delta):
 		canPlayCard = false
 		timer.start()
 	var targetVector = Vector2.ZERO
-	targetVector.x = -10
-	var targetPosition = global_position + targetVector
-	moveTowardPosition(targetPosition, delta)
+	targetVector.x = -1
+	targetVector.y = -1
+	var targetPosition = global_position + targetVector.normalized()
+	drift(targetPosition, delta, 150)
 
 func rightState(delta):
 	if(canPlayCard):
 		canPlayCard = false
 		timer.start()
 	var targetVector = Vector2.ZERO
-	targetVector.x = 10
-	var targetPosition = global_position + targetVector
-	moveTowardPosition(targetPosition, delta)
+	targetVector.x = 1
+	targetVector.y = -1
+	var targetPosition = global_position + targetVector.normalized()
+	drift(targetPosition, delta, 150)
 	
-func moveTowardPosition(targetPosition, delta):
+func drive(targetPosition, delta):
 	var direction = global_position.direction_to(targetPosition)
 	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 	
-func idleState(delta):
-	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)	
+func drift(targetPosition, delta, maxSpeed):
+	var direction = global_position.direction_to(targetPosition)
+	velocity = velocity.move_toward(direction * maxSpeed, ACCELERATION * delta)
 	
+func idleState(delta):
+	var targetVector = Vector2.ZERO
+	targetVector.y = -1
+	var targetPosition = global_position + targetVector
+	drive(targetPosition, delta)
 	
 	
 	
