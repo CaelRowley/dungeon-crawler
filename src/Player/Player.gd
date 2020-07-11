@@ -7,9 +7,9 @@ var velocity = Vector2.ZERO
 var rollVector = Vector2.DOWN
 var stats = PlayerStats
 
-const MAX_SPEED = 100
+var MAX_SPEED = 100
 const ACCELERATION = 10000
-const FRICTION = 400
+const FRICTION = 50
 const ROLL_SPEED = 110
 
 onready var animationTree = $AnimationTree
@@ -25,6 +25,9 @@ var timer = null
 var canPlayCard = true
 var speed = 1
 var handSize = 0 
+var cardsPlayed = 0
+
+var slowTimer = null
 
 func _ready():
 	stats.connect("noHealth", self, "queue_free")
@@ -37,10 +40,19 @@ func _ready():
 	timer.connect("timeout", self, "on_timeout_complete")
 	add_child(timer)
 	
+	slowTimer = Timer.new()
+	slowTimer.set_one_shot(false)
+	slowTimer.set_wait_time(1)
+	slowTimer.connect("timeout", self, "on_timeout_slowdown")
+	add_child(slowTimer)
+	slowTimer.start()
+	
 func _unhandled_input(event):
 	if event.is_action_released("left_click"):
 		for area in cardArea.get_overlapping_areas():
+			MAX_SPEED+=20
 			handSize -= 1
+			cardsPlayed +=1
 			state = area.getCard()
 			area.queue_free()
 
@@ -52,15 +64,27 @@ func _process(delta):
 			leftState(delta)
 		"RightCard":
 			rightState(delta)
+		"Win":
+			pass
 	velocity = move_and_slide(velocity)
 	if(handSize < 1):
 		deck.discardHand()
 		deck.nextHand()
 		handSize = deck.getHandSize()
+	if (position.y < -10000 && state != "Win"):
+		state = "Win"
+		print('you win')
+		print('score: ', cardsPlayed)
+#		get_tree().change_scene("res://path/to/scene.tscn")
 
 func on_timeout_complete():
 	canPlayCard = true
 	state = "Idle"
+	
+func on_timeout_slowdown():
+	pass
+	if(MAX_SPEED >= 20):
+		MAX_SPEED -= 10
 	
 func leftState(delta):
 	if(canPlayCard):
@@ -70,7 +94,7 @@ func leftState(delta):
 	targetVector.x = -1
 	targetVector.y = -1
 	var targetPosition = global_position + targetVector.normalized()
-	drift(targetPosition, delta, 150)
+	drift(targetPosition, delta, MAX_SPEED)
 
 func rightState(delta):
 	if(canPlayCard):
@@ -80,7 +104,7 @@ func rightState(delta):
 	targetVector.x = 1
 	targetVector.y = -1
 	var targetPosition = global_position + targetVector.normalized()
-	drift(targetPosition, delta, 150)
+	drift(targetPosition, delta, MAX_SPEED)
 	
 func drive(targetPosition, delta):
 	var direction = global_position.direction_to(targetPosition)
