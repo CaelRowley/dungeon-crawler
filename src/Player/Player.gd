@@ -57,9 +57,9 @@ func _ready():
 	print(startPos)
 
 func end_game():
+	state = "Win"
 	hurtBox.disabled = false
 	if ($Sprite):
-		state = "Win"
 		$Sprite.queue_free()
 		$Panel/MaxSpeed.text = 'Max Speed: ' + str(highestSpeed)
 		$Panel/Distance.text = 'Distance: ' + str(-position.y - -startPos)
