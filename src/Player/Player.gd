@@ -33,7 +33,27 @@ var highestSpeed = 0
 var startPos = 0
 onready var hurtBox = $HitboxPivot/SwordHitbox/CollisionShape2D
 
+var currentRole
+
 func _ready():
+	randomize()
+	var x = randi()%3
+	if(x == 1):
+		$BusSprite.visible = false
+		$AmbulanceSprite.visible = true
+		$PoliceSprite.visible = false
+		currentRole = 'Ambulance'
+	elif(x == 2):
+		$BusSprite.visible = false
+		$AmbulanceSprite.visible = false
+		$PoliceSprite.visible = true
+		currentRole = 'Police'
+	else:
+		$BusSprite.visible = true
+		$AmbulanceSprite.visible = false
+		$PoliceSprite.visible = false
+		currentRole = 'Bus'
+		
 	hurtBox.disabled = true
 	stats.connect("noHealth", self, "end_game")
 	animationTree.active = true
@@ -59,16 +79,17 @@ func _ready():
 func end_game():
 	state = "Win"
 	hurtBox.disabled = false
-	if ($Sprite):
-		$Sprite.queue_free()
-		$Panel/MaxSpeed.text = 'Max Speed: ' + str(highestSpeed)
-		$Panel/Distance.text = 'Distance: ' + str(-position.y - -startPos)
-		$Panel.visible = true
-		canPlayCard = false
+	$BusSprite.visible = false
+	$AmbulanceSprite.visible = false
+	$PoliceSprite.visible = false
+	$Panel/MaxSpeed.text = 'Max Speed: ' + str(highestSpeed)
+	$Panel/Distance.text = 'Distance: ' + str(-position.y - -startPos)
+	$Panel.visible = true
+	canPlayCard = false
 
 	
 func _unhandled_input(event):
-	if event.is_action_released("left_click"):
+	if event.is_action_released("left_click") && canPlayCard:
 		for area in cardArea.get_overlapping_areas():
 			MAX_SPEED+=20
 			if(MAX_SPEED > highestSpeed):
@@ -80,6 +101,24 @@ func _unhandled_input(event):
 			if(area.getCard() == "KillCard"):
 				timer.start()
 				hurtBox.disabled = false
+			elif(area.getCard() == "AmbulanceCard"):
+				hurtbox.createHitEffect()
+				$BusSprite.visible = false
+				$AmbulanceSprite.visible = true
+				$PoliceSprite.visible = false
+				currentRole = 'Ambulance'
+			elif(area.getCard() == "PoliceCard"):
+				hurtbox.createHitEffect()
+				$BusSprite.visible = false
+				$AmbulanceSprite.visible = false
+				$PoliceSprite.visible = true
+				currentRole = 'Police'
+			elif(area.getCard() == "BusCard"):
+				hurtbox.createHitEffect()
+				$BusSprite.visible = true
+				$AmbulanceSprite.visible = false
+				$PoliceSprite.visible = false
+				currentRole = 'Bus'
 			else:
 				state = area.getCard()
 			

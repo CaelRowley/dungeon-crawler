@@ -4,8 +4,11 @@ const leftCard = preload("res://Player/Cards/LeftCard.tscn")
 const rightCard = preload("res://Player/Cards/RightCard.tscn")
 const boostCard = preload("res://Player/Cards/BoostCard.tscn")
 const killCard = preload("res://Player/Cards/KillCard.tscn")
+const policeCard = preload("res://Player/Cards/policeCard.tscn")
+const ambulanceCard = preload("res://Player/Cards/ambulanceCard.tscn")
+const busCard = preload("res://Player/Cards/busCard.tscn")
 
-var deck = ['leftCard', 'leftCard', 'leftCard', 'rightCard', 'rightCard', 'rightCard', 'boostCard', 'boostCard', 'killCard', 'killCard']
+var deck = ['leftCard', 'leftCard', 'leftCard', 'rightCard', 'rightCard', 'rightCard', 'boostCard', 'boostCard', 'killCard', 'killCard', 'policeCard', 'ambulanceCard', 'busCard']
 
 var handSize = 3
 var hand = []
@@ -56,6 +59,12 @@ func displayHand():
 			card = killCard.instance()
 		if(hand[i] == 'boostCard'):
 			card = boostCard.instance()
+		if(hand[i] == 'policeCard'):
+			card = policeCard.instance()
+		if(hand[i] == 'ambulanceCard'):
+			card = ambulanceCard.instance()
+		if(hand[i] == 'busCard'):
+			card = busCard.instance()
 			
 		get_parent().add_child(card)
 		card.position = Vector2(-50 * (i -1), 50)
