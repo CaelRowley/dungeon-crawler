@@ -22,7 +22,7 @@ onready var cardArea = $CardArea
 
 var timer = null
 var canPlayCard = true
-var speed = 1
+var speed = -1
 
 func _ready():
 	stats.connect("noHealth", self, "queue_free")
@@ -46,10 +46,10 @@ func _process(delta):
 		"Idle":
 			idleState(delta)
 		"LeftCard":
-			speed +=1
+			speed -=1
 			leftState(delta)
 		"RightCard":
-			speed +=1
+			speed -=1
 			rightState(delta)
 	var targetVector = Vector2.ZERO
 	targetVector.y = speed
@@ -66,7 +66,7 @@ func leftState(delta):
 		canPlayCard = false
 		timer.start()
 	var targetVector = Vector2.ZERO
-	targetVector.x = -5
+	targetVector.x = -10
 	var targetPosition = global_position + targetVector
 	moveTowardPosition(targetPosition, delta)
 
@@ -75,7 +75,7 @@ func rightState(delta):
 		canPlayCard = false
 		timer.start()
 	var targetVector = Vector2.ZERO
-	targetVector.x = 5
+	targetVector.x = 10
 	var targetPosition = global_position + targetVector
 	moveTowardPosition(targetPosition, delta)
 	
