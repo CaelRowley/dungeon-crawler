@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://UI/menu_main.png" type="Texture" id=2]
+[ext_resource path="res://UI/menu_info.png" type="Texture" id=2]
 [ext_resource path="res://MenuButton.gd" type="Script" id=3]
-[ext_resource path="res://MenuButton2.gd" type="Script" id=4]
 
 [node name="MainMenu" type="Node2D"]
 
@@ -35,25 +34,13 @@ __meta__ = {
 }
 
 [node name="MenuButton" type="MenuButton" parent="Panel"]
-margin_left = 115.833
-margin_top = 136.098
-margin_right = 198.833
-margin_bottom = 156.098
-rect_scale = Vector2( 0.471826, 0.838549 )
+margin_left = 59.2005
+margin_top = 142.469
+margin_right = 142.201
+margin_bottom = 162.469
+rect_scale = Vector2( 2.41826, 0.838549 )
 text = "Start Game"
 script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MenuButton2" type="MenuButton" parent="Panel"]
-margin_left = 164.442
-margin_top = 135.626
-margin_right = 247.442
-margin_bottom = 155.626
-rect_scale = Vector2( 0.471826, 0.838549 )
-text = "Start Game"
-script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -63,4 +50,3 @@ position = Vector2( 160.039, 89.8797 )
 scale = Vector2( 0.225, 0.225 )
 texture = ExtResource( 2 )
 [connection signal="pressed" from="Panel/MenuButton" to="Panel/MenuButton" method="_on_MenuButton_pressed"]
-[connection signal="pressed" from="Panel/MenuButton2" to="Panel/MenuButton2" method="_on_MenuButton2_pressed"]
