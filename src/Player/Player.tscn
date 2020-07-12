@@ -5,7 +5,7 @@
 [ext_resource path="res://Collision/Hitbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Player/SwordHitbox.gd" type="Script" id=4]
 [ext_resource path="res://Collision/Hurtbox.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Shadows/MediumShadow.png" type="Texture" id=6]
+[ext_resource path="res://Shadows/LargeShadow.png" type="Texture" id=6]
 [ext_resource path="res://Music and Sounds/Swipe.wav" type="AudioStream" id=7]
 [ext_resource path="res://Music and Sounds/Evade.wav" type="AudioStream" id=8]
 [ext_resource path="res://Player/Cards/ambulance-Sheet-export.png" type="Texture" id=9]
@@ -628,8 +628,8 @@ collision_layer = 2
 script = ExtResource( 2 )
 
 [node name="Shadow" type="Sprite" parent="."]
-position = Vector2( -0.801919, -3.57181 )
-scale = Vector2( 1.16249, 2.93729 )
+position = Vector2( 0.0562716, -2.16926 )
+scale = Vector2( 0.627676, 1.54988 )
 texture = ExtResource( 6 )
 
 [node name="PoliceSprite" type="Sprite" parent="."]
@@ -638,9 +638,11 @@ texture = ExtResource( 6 )
 position = Vector2( 0.531587, -6.14249 )
 scale = Vector2( 0.15, 0.15 )
 frames = SubResource( 4 )
+frame = 2
 playing = true
 
 [node name="AmbulanceSprite" type="Sprite" parent="."]
+visible = false
 
 [node name="AmbulanceSprite" type="AnimatedSprite" parent="AmbulanceSprite"]
 position = Vector2( 0.531587, -6.14249 )
@@ -648,10 +650,11 @@ scale = Vector2( 0.15, 0.15 )
 z_index = 1
 frames = SubResource( 8 )
 animation = "New Anim"
-frame = 2
+frame = 1
 playing = true
 
 [node name="BusSprite" type="Sprite" parent="."]
+visible = false
 position = Vector2( -0.204192, -5.09136 )
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 11 )
