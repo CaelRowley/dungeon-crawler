@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=2]
+[gd_scene load_steps=75 format=2]
 
 [ext_resource path="res://Player/Deck.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -11,6 +11,10 @@
 [ext_resource path="res://Player/Cards/ambulance-Sheet-export.png" type="Texture" id=9]
 [ext_resource path="res://Player/Cards/police-Sheet.png" type="Texture" id=10]
 [ext_resource path="res://Player/Cards/bus.png" type="Texture" id=11]
+[ext_resource path="res://Player/MenuButton.gd" type="Script" id=12]
+[ext_resource path="res://UI/button_mainmenu.png" type="Texture" id=13]
+[ext_resource path="res://UI/button_ride-again.png" type="Texture" id=14]
+[ext_resource path="res://Player/MenuButton2.gd" type="Script" id=15]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 10 )
@@ -748,7 +752,6 @@ anims/Start = SubResource( 58 )
 script = ExtResource( 1 )
 
 [node name="Panel" type="Panel" parent="."]
-visible = false
 margin_left = -79.2738
 margin_top = -111.548
 margin_right = 84.7262
@@ -769,10 +772,10 @@ __meta__ = {
 }
 
 [node name="CardsPlayed" type="Label" parent="Panel"]
-margin_left = -1.0
-margin_top = 24.0
-margin_right = 330.0
-margin_bottom = 104.0
+margin_left = -0.646446
+margin_top = 32.4853
+margin_right = 330.354
+margin_bottom = 112.485
 rect_scale = Vector2( 0.5, 0.5 )
 text = "Cards Played:"
 align = 1
@@ -781,10 +784,10 @@ __meta__ = {
 }
 
 [node name="MaxSpeed" type="Label" parent="Panel"]
-margin_left = -0.897667
-margin_top = 36.4853
-margin_right = 330.102
-margin_bottom = 116.485
+margin_left = -0.544113
+margin_top = 44.9706
+margin_right = 330.456
+margin_bottom = 124.97
 rect_scale = Vector2( 0.5, 0.5 )
 text = "Max Speed:"
 align = 1
@@ -793,10 +796,10 @@ __meta__ = {
 }
 
 [node name="Distance" type="Label" parent="Panel"]
-margin_left = -1.0
-margin_top = 48.459
-margin_right = 330.0
-margin_bottom = 128.459
+margin_left = -0.646446
+margin_top = 56.9443
+margin_right = 330.354
+margin_bottom = 136.944
 rect_scale = Vector2( 0.5, 0.5 )
 text = "Distance:"
 align = 1
@@ -817,17 +820,43 @@ __meta__ = {
 }
 
 [node name="MenuButton" type="MenuButton" parent="Panel"]
-margin_left = 41.6519
-margin_top = 96.4032
-margin_right = 118.652
-margin_bottom = 116.403
+margin_left = 3.11458
+margin_top = 97.2871
+margin_right = 86.1146
+margin_bottom = 117.287
+rect_scale = Vector2( 0.899969, 0.687868 )
 text = "Ride Again!"
 switch_on_hover = true
+script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="MenuButton2" type="MenuButton" parent="Panel"]
+margin_left = 86.1996
+margin_top = 97.2871
+margin_right = 169.2
+margin_bottom = 117.287
+rect_scale = Vector2( 0.899969, 0.687868 )
+text = "Ride Again!"
+switch_on_hover = true
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Panel"]
+position = Vector2( 40.1122, 104.778 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 14 )
+
+[node name="Sprite2" type="Sprite" parent="Panel"]
+position = Vector2( 123.393, 104.778 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 13 )
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
-[connection signal="pressed" from="Panel/MenuButton" to="." method="_on_MenuButton_pressed"]
+[connection signal="pressed" from="Panel/MenuButton" to="Panel/MenuButton" method="_on_MenuButton_pressed"]
+[connection signal="pressed" from="Panel/MenuButton2" to="Panel/MenuButton2" method="_on_MenuButton2_pressed"]
 
 [editable path="HitboxPivot/SwordHitbox"]
 

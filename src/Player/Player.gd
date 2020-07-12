@@ -80,7 +80,6 @@ func _ready():
 
 func end_game():
 	state = "Win"
-	hurtBox.disabled = false
 	$BusSprite.visible = false
 	$AmbulanceSprite.visible = false
 	$PoliceSprite.visible = false
@@ -147,6 +146,8 @@ func _process(delta):
 		"Win":
 			velocity = velocity.move_toward(Vector2.ZERO, ACCELERATION * delta)
 			canPlayCard = false
+			timer.start()
+			hurtBox.disabled = false
 	velocity = move_and_slide(velocity)
 	if(handSize < 1):
 		deck.discardHand()
@@ -158,6 +159,8 @@ func on_timeout_complete():
 		hurtBox.disabled = true
 		canPlayCard = true
 		state = "Idle"
+	else:
+		hurtBox.disabled = true
 	
 func on_timeout_slowdown():
 	pass
