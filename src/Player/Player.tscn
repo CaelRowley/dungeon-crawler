@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=2]
+[gd_scene load_steps=71 format=2]
 
 [ext_resource path="res://Player/Deck.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -54,6 +54,9 @@ animations = [ {
 
 [sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 2490.69, 779.26 )
+
+[sub_resource type="RectangleShape2D" id=59]
+extents = Vector2( 31.2146, 17.7682 )
 
 [sub_resource type="CapsuleShape2D" id=10]
 radius = 62.3019
@@ -646,7 +649,6 @@ scale = Vector2( 0.15, 0.15 )
 z_index = 1
 frames = SubResource( 8 )
 animation = "New Anim"
-frame = 1
 playing = true
 
 [node name="BusSprite" type="Sprite" parent="."]
@@ -655,7 +657,7 @@ scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 11 )
 
 [node name="CardArea" type="Area2D" parent="."]
-position = Vector2( 1.80473, -73.4771 )
+position = Vector2( 1.27501, -91.488 )
 scale = Vector2( 0.1, 0.1 )
 collision_layer = 65
 collision_mask = 65
@@ -663,6 +665,11 @@ collision_mask = 65
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CardArea"]
 position = Vector2( 2.93243, 252.197 )
 shape = SubResource( 9 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CardArea"]
+position = Vector2( 1701.62, 1131.44 )
+scale = Vector2( 25.5235, 51.7582 )
+shape = SubResource( 59 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -0.518883, -3.23302 )

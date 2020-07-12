@@ -6,4 +6,4 @@ func getDamage():
 	return damage
 
 func getName():
-	return 'DeadScooter'
+	return 'BusStop'

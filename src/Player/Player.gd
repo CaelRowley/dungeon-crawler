@@ -94,38 +94,45 @@ func end_game():
 func _unhandled_input(event):
 	if event.is_action_released("left_click") && canPlayCard:
 		for area in cardArea.get_overlapping_areas():
-			MAX_SPEED+=20
 			if(MAX_SPEED > highestSpeed):
 				highestSpeed = MAX_SPEED
-			handSize -= 1
-			cardsPlayed +=1
-			$Panel/CardsPlayed.text = 'Cards Played: ' + str(cardsPlayed)
-			
+			if(area.getCard() != "DeckCard"):
+				MAX_SPEED+=20			
+				handSize -= 1
+				cardsPlayed +=1
+				$Panel/CardsPlayed.text = 'Cards Played: ' + str(cardsPlayed)
+				
 			if(area.getCard() == "KillCard"):
 				timer.start()
 				hurtBox.disabled = false
+				area.queue_free()
+			elif(area.getCard() == "DeckCard"):
+				area.queue_free()
+				deck.newDeck()
 			elif(area.getCard() == "AmbulanceCard"):
 				hurtbox.createHitEffect()
 				$BusSprite.visible = false
 				$AmbulanceSprite.visible = true
 				$PoliceSprite.visible = false
 				currentRole = 'Ambulance'
+				area.queue_free()
 			elif(area.getCard() == "PoliceCard"):
 				hurtbox.createHitEffect()
 				$BusSprite.visible = false
 				$AmbulanceSprite.visible = false
 				$PoliceSprite.visible = true
 				currentRole = 'Police'
+				area.queue_free()
 			elif(area.getCard() == "BusCard"):
 				hurtbox.createHitEffect()
 				$BusSprite.visible = true
 				$AmbulanceSprite.visible = false
 				$PoliceSprite.visible = false
 				currentRole = 'Bus'
+				area.queue_free()
 			else:
 				state = area.getCard()
-			
-			area.queue_free()
+				area.queue_free()
 
 func _process(delta):
 	match state:
@@ -253,10 +260,13 @@ func dodgeStateFinished():
 func _on_Hurtbox_area_entered(collider):
 	if (collider.getName() == 'Scooter' && currentRole == 'Police'):
 		score += 10
+		hurtbox.createScoreEffect()
 	elif (collider.getName() == 'DeadScooter' && currentRole == 'Ambulance'):
 		score += 10
+		hurtbox.createScoreEffect()
 	elif (collider.getName() == 'BusStop' && currentRole == 'Bus'):
 		score += 10
+		hurtbox.createScoreEffect()
 	else:
 		hurtbox.startInvincibility(1)
 		hurtbox.createHitEffect()

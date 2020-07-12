@@ -8,7 +8,15 @@ const policeCard = preload("res://Player/Cards/policeCard.tscn")
 const ambulanceCard = preload("res://Player/Cards/ambulanceCard.tscn")
 const busCard = preload("res://Player/Cards/busCard.tscn")
 
-var deck = ['leftCard', 'leftCard', 'leftCard', 'leftCard', 'rightCard', 'rightCard', 'rightCard', 'rightCard', 'killCard', 'killCard', 'policeCard', 'ambulanceCard', 'busCard']
+const deck1 = preload("res://Player/Cards/deck1.tscn")
+const deck2 = preload("res://Player/Cards/deck2.tscn")
+const deck3 = preload("res://Player/Cards/deck3.tscn")
+const deck4 = preload("res://Player/Cards/deck4.tscn")
+const deck5 = preload("res://Player/Cards/deck5.tscn")
+
+var deck = ['leftCard', 'leftCard', 'leftCard', 'leftCard', 'leftCard', 
+	'rightCard', 'rightCard', 'rightCard', 'rightCard', 'rightCard', 
+	'boostCard', 'killCard', 'policeCard', 'ambulanceCard', 'busCard']
 
 var handSize = 5
 var hand = []
@@ -67,7 +75,36 @@ func displayHand():
 			card = busCard.instance()
 			
 		get_parent().add_child(card)
-		card.position = Vector2(-30 * (i -2), 45)
+		card.position = Vector2(-30 * (i -2), 30)
 		
+	var deckSprite
+	if(deck.size() > 12):
+		deckSprite = deck5.instance()
+	elif(deck.size() > 9):
+		deckSprite = deck4.instance()
+	elif(deck.size() > 6):
+		deckSprite = deck3.instance()
+	elif(deck.size() > 3):
+		deckSprite = deck2.instance()
+	else:
+		deckSprite = deck1.instance()
+	get_parent().add_child(deckSprite)
+	deckSprite.position = Vector2(-32 * (-3), 30)
+	
+func newDeck():
+	var deckSprite
+	if(deck.size() > 12):
+		deckSprite = deck5.instance()
+	elif(deck.size() > 9):
+		deckSprite = deck4.instance()
+	elif(deck.size() > 6):
+		deckSprite = deck3.instance()
+	elif(deck.size() > 3):
+		deckSprite = deck2.instance()
+	else:
+		deckSprite = deck1.instance()
+	get_parent().add_child(deckSprite)
+	deckSprite.position = Vector2(-32 * (-3), 30)
+	
 func getHandSize():
 	return hand.size()

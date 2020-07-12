@@ -1,6 +1,7 @@
 extends Area2D
 
 const HitEffect = preload("res://Effects/HitEffect.tscn") 
+const ScoreEffect = preload("res://Effects/ScoreEffect.tscn") 
 
 var invincible = false setget setInvinsible
 
@@ -26,6 +27,12 @@ func createHitEffect():
 	main.add_child(hitEffect)
 	hitEffect.global_position = global_position - Vector2(0, 12)
 
+func createScoreEffect():
+	var scoreEffect = ScoreEffect.instance()
+	var main = get_tree().current_scene
+	main.add_child(scoreEffect)
+	scoreEffect.global_position = global_position - Vector2(0, 12)
+	
 func _on_Timer_timeout():
 	setInvinsible(false)
 

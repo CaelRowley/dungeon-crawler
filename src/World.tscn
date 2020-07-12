@@ -501,7 +501,7 @@ format = 1
 position = Vector2( 134.953, -122.881 )
 current = true
 smoothing_enabled = true
-smoothing_speed = 4.0
+smoothing_speed = 10.0
 
 [node name="YSort" type="YSort" parent="."]
 position = Vector2( 177, 253 )
