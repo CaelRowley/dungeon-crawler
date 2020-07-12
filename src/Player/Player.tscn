@@ -648,7 +648,7 @@ scale = Vector2( 0.15, 0.15 )
 z_index = 1
 frames = SubResource( 8 )
 animation = "New Anim"
-frame = 1
+frame = 2
 playing = true
 
 [node name="BusSprite" type="Sprite" parent="."]

@@ -8,9 +8,9 @@
 [ext_resource path="res://Enemies/PlayerDetectionZone.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Collision/Hitbox.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Enemies/WanderController.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Enemies/vehicle_scooter.png" type="Texture" id=9]
+[ext_resource path="res://Enemies/scooter_blue.png" type="Texture" id=9]
 
-[sub_resource type="CapsuleShape2D" id=5]
+[sub_resource type="CapsuleShape2D" id=1]
 radius = 6.55657
 height = 14.0751
 
@@ -38,7 +38,7 @@ texture = ExtResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.508133, -1.22487 )
 scale = Vector2( 0.5, 0.5 )
-shape = SubResource( 5 )
+shape = SubResource( 1 )
 
 [node name="Hurtbox" parent="." instance=ExtResource( 3 )]
 collision_layer = 16
