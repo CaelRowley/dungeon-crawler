@@ -48,17 +48,31 @@ func _process(delta):
 				elif(y == 3):
 					carVal = car3.instance()
 				else:
-					carVal = car4.instance()	
+					carVal = car4.instance()
+				cars.push_front(carVal)
+				get_parent().add_child(carVal)
+				carVal.global_position = Vector2(80 + (randi()%160), 90* nextBackground)
 			elif(x == 2):
 				carVal = scooter.instance()
+				cars.push_front(carVal)
+				get_parent().add_child(carVal)
+				carVal.global_position = Vector2(80 + (randi()%160), 90* nextBackground)
 			elif(x == 3):
 				carVal = busStop.instance()
+				cars.push_front(carVal)
+				get_parent().add_child(carVal)
+				var y = randi()%2
+				if(y == 1):
+					carVal.global_position = Vector2(50, 90* nextBackground)
+				else:
+					carVal.global_position = Vector2(270, 90* nextBackground)
 			else:
 				carVal = deadScooter.instance()
+				cars.push_front(carVal)
+				get_parent().add_child(carVal)
+				carVal.global_position = Vector2(80 + (randi()%160), 90* nextBackground)
 
-			cars.push_front(carVal)
-			get_parent().add_child(carVal)
-			carVal.global_position = Vector2(35* (randi()%8)+1, 90* nextBackground)
+#			carVal.global_position = Vector2(270, 90* nextBackground)
 			numberOfCars += 1
 		else:
 			cars.pop_back().queue_free()

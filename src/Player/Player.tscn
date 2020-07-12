@@ -638,7 +638,6 @@ texture = ExtResource( 6 )
 position = Vector2( 0.531587, -6.14249 )
 scale = Vector2( 0.15, 0.15 )
 frames = SubResource( 4 )
-frame = 1
 playing = true
 
 [node name="AmbulanceSprite" type="Sprite" parent="."]
