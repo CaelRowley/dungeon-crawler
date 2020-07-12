@@ -16,6 +16,8 @@ const deck5 = preload("res://Player/Cards/deck5.tscn")
 
 var deck = ['leftCard', 'leftCard', 'leftCard', 'leftCard', 'leftCard', 
 	'rightCard', 'rightCard', 'rightCard', 'rightCard', 'rightCard', 
+	'boostCard', 'killCard', 'leftCard', 'leftCard',  'leftCard',
+	'rightCard', 'rightCard', 'boostCard', 'rightCard', 'leftCard',
 	'boostCard', 'killCard', 'policeCard', 'ambulanceCard', 'busCard']
 
 var handSize = 5
@@ -78,13 +80,13 @@ func displayHand():
 		card.position = Vector2(-30 * (i -2), 30)
 		
 	var deckSprite
-	if(deck.size() > 12):
+	if(deck.size() >= 20):
 		deckSprite = deck5.instance()
-	elif(deck.size() > 9):
+	elif(deck.size() >= 15):
 		deckSprite = deck4.instance()
-	elif(deck.size() > 6):
+	elif(deck.size() >= 10):
 		deckSprite = deck3.instance()
-	elif(deck.size() > 3):
+	elif(deck.size() >= 5):
 		deckSprite = deck2.instance()
 	else:
 		deckSprite = deck1.instance()
@@ -93,13 +95,13 @@ func displayHand():
 	
 func newDeck():
 	var deckSprite
-	if(deck.size() > 12):
+	if(deck.size() >= 20):
 		deckSprite = deck5.instance()
-	elif(deck.size() > 9):
+	elif(deck.size() >= 15):
 		deckSprite = deck4.instance()
-	elif(deck.size() > 6):
+	elif(deck.size() >= 10):
 		deckSprite = deck3.instance()
-	elif(deck.size() > 3):
+	elif(deck.size() >= 5):
 		deckSprite = deck2.instance()
 	else:
 		deckSprite = deck1.instance()

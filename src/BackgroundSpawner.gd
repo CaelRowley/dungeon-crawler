@@ -1,6 +1,6 @@
 extends Node2D
 
-const background = preload("res://background-1.tscn")
+const background = preload("res://background-2.tscn")
 const car = preload("res://Enemies/Car.tscn")
 const car2 = preload("res://Enemies/Car2.tscn")
 const car3 = preload("res://Enemies/Car3.tscn")
@@ -28,7 +28,7 @@ func _process(delta):
 			var backgrounda = background.instance()
 			backgrounds.push_front(backgrounda)
 			get_parent().add_child(backgrounda)
-			backgrounda.global_position = Vector2(160, 240* nextBackground)
+			backgrounda.global_position = Vector2(160, 90* nextBackground)
 			nextBackground -= 1
 			backgroundCount += 1
 		else:
