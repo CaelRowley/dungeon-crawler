@@ -7,6 +7,7 @@ const car3 = preload("res://Enemies/Car3.tscn")
 const car4 = preload("res://Enemies/Car4.tscn")
 const scooter = preload("res://Enemies/Scooter.tscn")
 const deadScooter = preload("res://Enemies/DeadScooter.tscn")
+const busStop = preload("res://Enemies/BusStop.tscn")
 
 var backgrounds: Array = []
 var numOfBackgrounds: int = 500
@@ -37,7 +38,7 @@ func _process(delta):
 		if(numberOfCars < maxCars):
 			var carVal
 			randomize()
-			var x = randi()%3
+			var x = randi()%4
 			if(x == 1):
 				var y = randi()%4
 				if(y == 1):
@@ -50,6 +51,8 @@ func _process(delta):
 					carVal = car4.instance()	
 			elif(x == 2):
 				carVal = scooter.instance()
+			elif(x == 3):
+				carVal = busStop.instance()
 			else:
 				carVal = deadScooter.instance()
 

@@ -67,7 +67,7 @@ func displayHand():
 			card = busCard.instance()
 			
 		get_parent().add_child(card)
-		card.position = Vector2(-30 * (i -1), 50)
+		card.position = Vector2(-30 * (i -2), 45)
 		
 func getHandSize():
 	return hand.size()
