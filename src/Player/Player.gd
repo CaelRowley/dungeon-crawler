@@ -26,6 +26,7 @@ var canPlayCard = true
 var speed = 1
 var handSize = 0 
 var cardsPlayed = 0
+var score = 0
 
 var slowTimer = null
 
@@ -33,7 +34,28 @@ var highestSpeed = 0
 var startPos = 0
 onready var hurtBox = $HitboxPivot/SwordHitbox/CollisionShape2D
 
+var currentRole
+
 func _ready():
+	randomize()
+	var x = randi()%3
+	x=2
+	if(x == 1):
+		$BusSprite.visible = false
+		$AmbulanceSprite.visible = true
+		$PoliceSprite.visible = false
+		currentRole = 'Ambulance'
+	elif(x == 2):
+		$BusSprite.visible = false
+		$AmbulanceSprite.visible = false
+		$PoliceSprite.visible = true
+		currentRole = 'Police'
+	else:
+		$BusSprite.visible = true
+		$AmbulanceSprite.visible = false
+		$PoliceSprite.visible = false
+		currentRole = 'Bus'
+		
 	hurtBox.disabled = true
 	stats.connect("noHealth", self, "end_game")
 	animationTree.active = true
@@ -54,36 +76,62 @@ func _ready():
 	slowTimer.start()
 	
 	startPos = position.y
-	print(startPos)
+
 
 func end_game():
 	state = "Win"
-	hurtBox.disabled = false
-	if ($Sprite):
-		$Sprite.queue_free()
-		$Panel/MaxSpeed.text = 'Max Speed: ' + str(highestSpeed)
-		$Panel/Distance.text = 'Distance: ' + str(-position.y - -startPos)
-		$Panel.visible = true
-		canPlayCard = false
+	$BusSprite.visible = false
+	$AmbulanceSprite.visible = false
+	$PoliceSprite.visible = false
+	$Panel/MaxSpeed.text = 'Max Speed: ' + str(highestSpeed)
+	$Panel/Distance.text = 'Distance: ' + str(-position.y - -startPos)
+	$Panel/Score.text = 'Score: ' + str(score)
+	$Panel.visible = true
+	canPlayCard = false
 
 	
 func _unhandled_input(event):
-	if event.is_action_released("left_click"):
+	if event.is_action_released("left_click") && canPlayCard:
 		for area in cardArea.get_overlapping_areas():
-			MAX_SPEED+=20
 			if(MAX_SPEED > highestSpeed):
 				highestSpeed = MAX_SPEED
-			handSize -= 1
-			cardsPlayed +=1
-			$Panel/CardsPlayed.text = 'Cards Played: ' + str(cardsPlayed)
-			
+			if(area.getCard() != "DeckCard"):
+				MAX_SPEED+=20			
+				handSize -= 1
+				cardsPlayed +=1
+				$Panel/CardsPlayed.text = 'Cards Played: ' + str(cardsPlayed)
+				
 			if(area.getCard() == "KillCard"):
 				timer.start()
 				hurtBox.disabled = false
+				area.queue_free()
+			elif(area.getCard() == "DeckCard"):
+				area.queue_free()
+				deck.newDeck()
+			elif(area.getCard() == "AmbulanceCard"):
+				hurtbox.createHitEffect()
+				$BusSprite.visible = false
+				$AmbulanceSprite.visible = true
+				$PoliceSprite.visible = false
+				currentRole = 'Ambulance'
+				area.queue_free()
+			elif(area.getCard() == "PoliceCard"):
+				hurtbox.createHitEffect()
+				$BusSprite.visible = false
+				$AmbulanceSprite.visible = false
+				$PoliceSprite.visible = true
+				currentRole = 'Police'
+				area.queue_free()
+			elif(area.getCard() == "BusCard"):
+				hurtbox.createHitEffect()
+				$BusSprite.visible = true
+				$AmbulanceSprite.visible = false
+				$PoliceSprite.visible = false
+				currentRole = 'Bus'
+				area.queue_free()
 			else:
 				state = area.getCard()
-			
-			area.queue_free()
+				area.queue_free()
 
 func _process(delta):
 	match state:
@@ -97,6 +145,9 @@ func _process(delta):
 			boostState(delta)
 		"Win":
 			velocity = velocity.move_toward(Vector2.ZERO, ACCELERATION * delta)
+			canPlayCard = false
+			timer.start()
+			hurtBox.disabled = false
 	velocity = move_and_slide(velocity)
 	if(handSize < 1):
 		deck.discardHand()
@@ -104,9 +155,12 @@ func _process(delta):
 		handSize = deck.getHandSize()
 
 func on_timeout_complete():
-	hurtBox.disabled = true
-	canPlayCard = true
-	state = "Idle"
+	if (state != "Win"):
+		hurtBox.disabled = true
+		canPlayCard = true
+		state = "Idle"
+	else:
+		hurtBox.disabled = true
 	
 func on_timeout_slowdown():
 	pass
@@ -207,12 +261,22 @@ func dodgeStateFinished():
 	state = "run"
 
 func _on_Hurtbox_area_entered(collider):
-	hurtbox.startInvincibility(1)
-	hurtbox.createHitEffect()
-	blinkAnimationPlayer.play("Start")
-	stats.setHealth(stats.getHealth() - collider.getDamage())
-	var playerHurtSound = PlayerHurtSound.instance()
-	get_tree().current_scene.add_child(playerHurtSound)
+	if (collider.getName() == 'Scooter' && currentRole == 'Police'):
+		score += 10
+		hurtbox.createScoreEffect()
+	elif (collider.getName() == 'DeadScooter' && currentRole == 'Ambulance'):
+		score += 10
+		hurtbox.createScoreEffect()
+	elif (collider.getName() == 'BusStop' && currentRole == 'Bus'):
+		score += 10
+		hurtbox.createScoreEffect()
+	else:
+		hurtbox.startInvincibility(1)
+		hurtbox.createHitEffect()
+		blinkAnimationPlayer.play("Start")
+		stats.setHealth(stats.getHealth() - collider.getDamage())
+		var playerHurtSound = PlayerHurtSound.instance()
+		get_tree().current_scene.add_child(playerHurtSound)
 	
 func _on_MenuButton_pressed():
 	stats.setHealth(3)

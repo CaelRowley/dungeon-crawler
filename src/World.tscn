@@ -1,12 +1,10 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://BackgroundSpawner.tscn" type="PackedScene" id=2]
 [ext_resource path="res://World/DirtTileset.png" type="Texture" id=3]
 [ext_resource path="res://World/CliffTileset.png" type="Texture" id=5]
-[ext_resource path="res://Enemies/Car.tscn" type="PackedScene" id=6]
 [ext_resource path="res://UI/HealthUI.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Music and Sounds/BackgroundSong.wav" type="AudioStream" id=10]
 
 [sub_resource type="TileSet" id=1]
 0/name = "DirtTileset.png 0"
@@ -502,7 +500,7 @@ format = 1
 position = Vector2( 134.953, -122.881 )
 current = true
 smoothing_enabled = true
-smoothing_speed = 4.0
+smoothing_speed = 10.0
 
 [node name="YSort" type="YSort" parent="."]
 position = Vector2( 177, 253 )
@@ -522,17 +520,6 @@ margin_top = 8.0
 margin_right = 50.0
 margin_bottom = 19.0
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 10 )
-volume_db = -12.0
-autoplay = true
-
 [node name="BackgroundSpawner" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0.511139, -225.444 )
 z_index = -4
-
-[node name="Car" parent="." instance=ExtResource( 6 )]
-position = Vector2( 233.461, -135.276 )
-
-[node name="Car2" parent="." instance=ExtResource( 6 )]
-position = Vector2( 88.5699, -194.807 )
